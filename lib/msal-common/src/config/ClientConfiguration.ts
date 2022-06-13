@@ -45,7 +45,8 @@ export type ClientConfiguration = {
     telemetry?: TelemetryOptions,
     serverTelemetryManager?: ServerTelemetryManager | null,
     persistencePlugin?: ICachePlugin | null,
-    serializableCache?: ISerializableTokenCache | null
+    serializableCache?: ISerializableTokenCache | null,    
+    appTokenProvider?: IAppTokenProvider | null
 };
 
 export type CommonClientConfiguration = {
@@ -60,7 +61,34 @@ export type CommonClientConfiguration = {
     serverTelemetryManager: ServerTelemetryManager | null,
     clientCredentials: ClientCredentials,
     persistencePlugin: ICachePlugin | null,
-    serializableCache: ISerializableTokenCache | null
+    serializableCache: ISerializableTokenCache | null, 
+    appTokenProvider: IAppTokenProvider | null,
+};
+
+/**
+ * Extensibility interface, which allows the app developer to return a token, based on the passed-in parameters, instead of fetching tokens from
+ * the Identity Provider (AAD).
+ * Developers need to construct and return an AppTokenProviderResult object back to MSAL. MSAL will cache the token response
+ * in the same way it would do if the result were comming from AAD.
+ * This extensibility point is only defined for the client_credential flow, i.e. acquireTokenByClientCredential
+ */
+export interface IAppTokenProvider { // TODO: expose this via some sort of Extensibility Options?
+    (appTokenPropviderParameters: AppTokenProviderParameters): Promise<AppTokenProviderResult>; // TODO: callback or method?
+}
+export type AppTokenProviderParameters = {
+    correlationId: string;
+    tenantId: string;
+    scopes: Array<string>;
+    claims: string;
+};
+export type AppTokenProviderResult = {
+    accessToken: string;
+    expiresInSeconds: number;
+    refreshInSeconds?: number;
+};
+
+export type ExtensibilityOptions = {
+    appTokenProvider: IAppTokenProvider ;
 };
 
 /**
@@ -127,7 +155,7 @@ export type ClientAssertion = {
 
 export type ClientCredentials = {
     clientSecret?: string,
-    clientAssertion?: ClientAssertion
+    clientAssertion?: ClientAssertion, 
 };
 
 /**
@@ -225,7 +253,8 @@ export function buildClientConfiguration(
         telemetry: telemetry,
         serverTelemetryManager: serverTelemetryManager,
         persistencePlugin: persistencePlugin,
-        serializableCache: serializableCache
+        serializableCache: serializableCache,         
+        appTokenProvider: appTokenProvider,
     }: ClientConfiguration): CommonClientConfiguration {
 
     const loggerOptions = { ...DEFAULT_LOGGER_IMPLEMENTATION, ...userLoggerOption };
@@ -242,7 +271,8 @@ export function buildClientConfiguration(
         telemetry: { ...DEFAULT_TELEMETRY_OPTIONS, ...telemetry },
         serverTelemetryManager: serverTelemetryManager || null,
         persistencePlugin: persistencePlugin || null,
-        serializableCache: serializableCache || null
+        serializableCache: serializableCache || null,  
+        appTokenProvider: appTokenProvider || null       
     };
 }
 

@@ -134,6 +134,13 @@ export class ConfidentialClientApplication extends ClientApplication implements 
         };
         const certificateNotEmpty = !StringUtils.isEmpty(certificate.thumbprint) || !StringUtils.isEmpty(certificate.privateKey);
 
+        // If app developer configures a return value from ESTS, they don't need a credential (e.g. AzureSDK can get token from Managed Identity without a cert / secret)                
+        if (configuration.extensibility?.appTokenCacheProvider)
+        {
+            // TODO: (bogdan) Is the ClientAssertion / ClientCredential class public? Should i put this extensibility in there?
+            return;
+        }
+
         // Check that at most one credential is set on the application
         if (
             clientSecretNotEmpty && clientAssertionNotEmpty ||
