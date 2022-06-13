@@ -76,10 +76,10 @@ export interface IAppTokenProvider { // TODO: expose this via some sort of Exten
     (appTokenPropviderParameters: AppTokenProviderParameters): Promise<AppTokenProviderResult>; // TODO: callback or method?
 }
 export type AppTokenProviderParameters = {
-    correlationId: string;
-    tenantId: string;
-    scopes: Array<string>;
-    claims: string;
+    readonly correlationId?: string;
+    readonly tenantId: string;
+    readonly scopes: Array<string>;
+    readonly claims?: string;
 };
 export type AppTokenProviderResult = {
     accessToken: string;

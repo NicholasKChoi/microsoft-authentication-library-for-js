@@ -137,7 +137,7 @@ export class ConfidentialClientApplication extends ClientApplication implements 
         // If app developer configures a return value from ESTS, they don't need a credential (e.g. AzureSDK can get token from Managed Identity without a cert / secret)                
         if (configuration.extensibility?.appTokenCacheProvider)
         {
-            // TODO: (bogdan) Is the ClientAssertion / ClientCredential class public? Should i put this extensibility in there?
+            // TODO: (bogdan) Is the ClientAssertion / ClientCredential better place for this? In js everything is public afaik...
             return;
         }
 
