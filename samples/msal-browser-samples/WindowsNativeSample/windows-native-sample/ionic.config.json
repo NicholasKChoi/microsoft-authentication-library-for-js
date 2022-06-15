@@ -1,0 +1,16 @@
+{
+  "name": "ionic-tutorial",
+  "integrations": {
+    "capacitor": {},
+    "enterprise": {
+      "keyId": 7575,
+      "productKey": "key_0fa05651ed3d46a2861c43fc8f456ce7",
+      "appId": "9d475d72",
+      "orgId": "d813beb4-8c7d-495d-922e-28e498986e70",
+      "registries": [
+        "@ionic-enterprise;https://registry.ionicframework.com/"
+      ]
+    }
+  },
+  "type": "react"
+}

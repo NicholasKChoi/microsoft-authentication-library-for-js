@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.app",
+  "appName": "Windows MSAL Login",
+  "webDir": "windows-native-sample/build",
+  "bundledWebRuntime": false
+}
