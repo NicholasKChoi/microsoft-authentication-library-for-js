@@ -1,6 +1,6 @@
 {
 	"appId": "io.ionic.starter",
-	"appName": "ionic-tutorial",
+	"appName": "windows-native-sample",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }

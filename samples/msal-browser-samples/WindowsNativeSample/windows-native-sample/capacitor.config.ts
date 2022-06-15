@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'ionic-tutorial',
+  appName: 'windows-native-sample',
   webDir: 'build',
   bundledWebRuntime: false
 };
