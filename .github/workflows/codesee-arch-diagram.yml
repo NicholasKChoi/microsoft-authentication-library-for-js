@@ -70,6 +70,12 @@ jobs:
           github_ref: ${{ github.ref }}
           languages: ${{ steps.detect-languages.outputs.languages }}
 
+      - name: Archive codesee map
+        uses: actions/upload-artifact@v3
+        with:
+          name: codesee map
+          path: codesee.metadata.json
+
       - name: Upload Map
         id: upload-map
         uses: Codesee-io/codesee-map-action@latest
